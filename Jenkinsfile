@@ -11,13 +11,13 @@ pipeline {
                         parameters: [choice(name: 'Service to deploy', choices: "${SERVICES}", description: 'What service you wont deploy?')]
                     )
                     inputDeploy = input(
-                        message: "Select a service",
+                        message: "Select a deployment",
                         parameters: [choice(name: 'Service to deploy', choices: "${DEPLOY}", description: 'What service you wont deploy?')]
                     )
                     def REPLICAS = sh (script: "kubectl get deploy ${inputDeploy} | awk '{print \$3}' | sed -n '1!p'", returnStdout:true).trim()
                     inputReplica = input(
-                        message: "Select a service",
-                        parameters: [choice(name: 'Service to deploy', choices: "${REPLICAS}", description: 'What service you wont deploy?')]
+                        message: "Current replicas for selected Deployment",
+                        parameters: [string(name: 'Current replicas for selected Deployment', defaultValue: "${REPLICAS}", description: 'What service you wont deploy?')]
                     )
                 }
             }
