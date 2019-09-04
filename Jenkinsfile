@@ -32,7 +32,7 @@ pipeline {
                         message: "Please give replicaset number",
                         parameters: [string(defaultValue: "1", description: 'Enter replica number?', name: 'Replicaset')]
                     )
-                    sh (script: "kubectl scale --current-replicas=${REPLICAS} --replicas="${params.Replicaset}" deployment/${inputDeploy}")
+                    sh (script: "kubectl scale --current-replicas=${REPLICAS} --replicas='${params.Replicaset}' deployment/${inputDeploy}")
             }
         }
         stage('Stage-Two'){
