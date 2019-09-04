@@ -17,7 +17,7 @@ pipeline {
                     def REPLICAS = sh (script: "kubectl get deploy ${inputDeploy} | awk '{print \$3}' | sed -n '1!p'", returnStdout:true).trim()
                     inputReplica = input(
                         message: "Current replicas for selected Deployment",
-                        parameters: [string(name: 'Current replicas for selected Deployment', defaultValue: "${REPLICAS}", description: 'What service you wont deploy?')]
+                        parameters: [choice(name: 'Current_replicas', choices: "${REPLICAS}", description: 'Current replicas for selected Deployment')]
                     )
                 }
             }
@@ -28,15 +28,11 @@ pipeline {
                     echo "The selected service is: ${inputService}"
                     echo "The selected service is: ${inputDeploy}"
                     echo "The selected service is: ${inputReplica}"
-                    inputcurrentreplicanum = input(
-                        message: "Please give replicaset number",
-                        parameters: [choice(name: 'CurrentReplica', choices: ['1', '2', '3'], description: 'Pick something')]
-                    )
                     inputreplicanum = input(
                         message: "Please give replicaset number",
                         parameters: [choice(name: 'Replicas', choices: ['1', '2', '3'], description: 'Pick something')]
                     )
-                    sh (script: "kubectl scale --current-replicas=${inputcurrentreplicanum} --replicas=${inputreplicanum} deployment/${inputDeploy}")
+                    sh (script: "kubectl scale --current-replicas=${inputReplica} --replicas=${inputreplicanum} deployment/${inputDeploy}")
                 }
             }
         }
