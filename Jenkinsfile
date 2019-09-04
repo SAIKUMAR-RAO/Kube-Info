@@ -4,10 +4,10 @@ pipeline {
         stage('My Stage') {
             steps {
                 script {
-                    def GIT_TAGS = sh (script: "helm ls | awk '{ print \$1 }' | sed -n '1!p'", returnStdout:true).trim()
+                    def SERVICES = sh (script: "helm ls | awk '{ print \$1 }' | sed -n '1!p'", returnStdout:true).trim()
                     inputResult = input(
                         message: "Select a service",
-                        parameters: [choice(name: 'Service to deploy', choices: "${branch1}\n${branch2}\n${branch3}", description: 'What branch you wont deploy?')]
+                        parameters: [choice(name: 'Service to deploy', choices: "${SERVICES}", description: 'What service you wont deploy?')]
                     )
                 }
             }
