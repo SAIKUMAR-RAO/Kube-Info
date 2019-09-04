@@ -30,9 +30,10 @@ pipeline {
                     echo "The selected service is: ${inputReplica}"
                     inputSet = input(
                         message: "Please give replicaset number",
-                        parameters: [string(defaultValue: "1", description: 'Enter replica number?', name: 'Replicaset')]
+                        parameters: [string(defaultValue: "1", description: 'Enter CurrentReplica number?', name: 'CurrentReplica'),
+                                    string(defaultValue: "1", description: 'Enter replica number?', name: 'Replicaset')]
                     )
-                    sh (script: "kubectl scale --current-replicas=${REPLICAS} --replicas='${params.Replicaset}' deployment/${inputDeploy}")
+                    sh (script: "kubectl scale --current-replicas='${params.CurrentReplica}' --replicas='${params.Replicaset}' deployment/${inputDeploy}")
                 }
             }
         }
