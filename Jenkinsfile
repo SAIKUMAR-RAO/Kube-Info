@@ -26,8 +26,8 @@ pipeline {
             steps{
                 script{
                     echo "The selected service is: ${inputService}"
-                    echo "The selected service is: ${inputDeploy}"
-                    echo "The selected service is: ${inputReplica}"
+                    echo "The selected deployment is: ${inputDeploy}"
+                    echo "Current Replicas for selected Deploy is: ${inputReplica}"
                     inputreplicanum = input(
                         message: "Please give replicaset number",
                         parameters: [choice(name: 'Replicas', choices: ['1', '2', '3'], description: 'Pick something')]
@@ -38,7 +38,10 @@ pipeline {
         }
         stage('Stage-Two'){
             steps {
-               sh "echo ${inputService} ${inputDeploy} ${inputReplica}"
+               echo "Service selected: ${inputService}"
+               echo "Deployment selected: ${inputDeploy}"
+               echo "Existing replicas for selected deploy: ${inputReplica}"
+               echo "Replicas after scaled: ${inputreplicanum}"
             }
         }
     }
