@@ -1,12 +1,12 @@
 pipeline {
-    agent any
+    agent { label 'kube'}
     stages {
         stage('My Stage') {
             steps {
                 script {
-                    def GIT_TAGS = sh (script: "ls -l /var/lib/jenkins/ | awk '{ print \$9 }'", returnStdout:true).trim()
+                    def GIT_TAGS = sh (script: "helm ls | awk '{ print \$1 }' | sed -n '1!p'", returnStdout:true).trim()
                     inputResult = input(
-                        message: "Select a git tag",
+                        message: "Select a service",
                         parameters: [choice(name: "git_tag", choices: "${GIT_TAGS}", description: "Git tag")]
                     )
                 }
