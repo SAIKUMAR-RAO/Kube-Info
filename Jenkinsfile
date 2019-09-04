@@ -19,7 +19,8 @@ pipeline {
         }
         stage('Stage-Two'){
             steps{
-                 sh "echo ${BRANCHDEPLOY}"
+                def BRANCHDEPLOY = ${inputResult}
+                sh "echo ${BRANCHDEPLOY}"
             }
         }
     }
