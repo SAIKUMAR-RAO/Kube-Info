@@ -14,7 +14,7 @@ pipeline {
                         message: "Select a service",
                         parameters: [choice(name: 'Service to deploy', choices: "${DEPLOY}", description: 'What service you wont deploy?')]
                     )
-                    def REPLICAS = sh (script: "kubectl get deploy ${inputDeploy} | awk '{print \$3,\$5}'", returnStdout:true).trim()
+                    def REPLICAS = sh (script: "kubectl get deploy ${inputDeploy} | awk '{print \$3}' | sed -n '1!p'", returnStdout:true).trim()
                     inputReplica = input(
                         message: "Select a service",
                         parameters: [choice(name: 'Service to deploy', choices: "${REPLICAS}", description: 'What service you wont deploy?')]
