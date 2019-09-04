@@ -24,14 +24,20 @@ pipeline {
         }
         stage('My other Stage'){
             steps{
-                echo "The selected service is: ${inputService}"
-                echo "The selected deploy is: ${inputDeploy}"
-                echo "The selected replica is: ${inputReplica}"
+                script{
+                    echo "The selected service is: ${inputService}"
+                    echo "The selected service is: ${inputDeploy}"
+                    echo "The selected service is: ${inputReplica}"
+                    inputSet = input(
+                        message: "Please give replicaset number",
+                        parameters: [string(defaultValue: "1", description: 'Enter replica number?', name: 'Replicaset')]
+                    )
+                    sh (script: "kubectl scale --current-replicas=${REPLICAS} --replicas="${params.Replicaset}" deployment/${inputDeploy}")
             }
         }
         stage('Stage-Two'){
             steps {
-               sh "echo Service: ${inputService}, Deployment: ${inputDeploy}, Replicas: ${inputReplica}"
+               sh "echo ${inputService} ${inputDeploy} ${inputReplica}"
             }
         }
     }
