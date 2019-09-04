@@ -25,13 +25,13 @@ pipeline {
         stage('My other Stage'){
             steps{
                 echo "The selected service is: ${inputService}"
-                echo "The selected service is: ${inputDeploy}"
-                echo "The selected service is: ${inputReplica}"
+                echo "The selected deploy is: ${inputDeploy}"
+                echo "The selected replica is: ${inputReplica}"
             }
         }
         stage('Stage-Two'){
             steps {
-               sh "echo ${inputService} ${inputDeploy} ${inputReplica}"
+               sh "echo Service: ${inputService}, Deployment: ${inputDeploy}, Replicas: ${inputReplica}"
             }
         }
     }
