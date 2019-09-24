@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'kube'}
     stages {
-        stage('My Stage') {
+        stage('Stage-One') {
             steps {
                 script {
                     def SERVICES = sh (script: "kubectl get svc --all-namespaces --sort-by=.metadata.name | awk '{print \$2}' | sed -n '1!p'", returnStdout:true).trim()
@@ -22,7 +22,7 @@ pipeline {
                 }
             }
         }
-        stage('My other Stage'){
+        stage('Stage-Two'){
             steps{
                 script{
                     echo "The selected service is: ${inputService}"
@@ -36,7 +36,7 @@ pipeline {
                 }
             }
         }
-        stage('Stage-Two'){
+        stage('Stage-Three'){
             steps {
                echo "Service selected: ${inputService}"
                echo "Deployment selected: ${inputDeploy}"
