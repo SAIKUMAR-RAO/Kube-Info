@@ -30,7 +30,7 @@ pipeline {
                     echo "Current Replicas for selected Deploy is: ${inputReplica}"
                     inputreplicanum = input(
                         message: "Please give replicaset number",
-                        parameters: [choice(name: 'Replicas', choices: ['1', '2', '3'], description: 'Pick your requirement')]
+                        parameters: [choice(name: 'Replicas', choices: ['1', '2', '3', '4', '5'], description: 'Pick your requirement')]
                     )
                     sh (script: "kubectl scale --current-replicas=${inputReplica} --replicas=${inputreplicanum} deployment/${inputDeploy}")
                 }
